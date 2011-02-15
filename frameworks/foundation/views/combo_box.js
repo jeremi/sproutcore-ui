@@ -508,11 +508,11 @@ SCUI.ComboBoxView = SC.View.extend( SC.Control, SC.Editable, {
     var value = this.get('textFieldView').get('value'),
         selection = this.get('textFieldView').get('selection'),
         wouldDeleteLastChar = NO;
-    if (!value.length) {
+    if (value && !value.length) {
       wouldDeleteLastChar = YES;
-    } else if (value.length === selection.length()) {
+    } else if (value && value.length === selection.length()) {
       wouldDeleteLastChar = YES;
-    } else if (value.length === 1 && selection.start === (delBackward ? 1 : 0)) {
+    } else if (value && value.length === 1 && selection.start === (delBackward ? 1 : 0)) {
       wouldDeleteLastChar = YES;
     }
 
@@ -565,10 +565,11 @@ SCUI.ComboBoxView = SC.View.extend( SC.Control, SC.Editable, {
   // Send this event to the drop down list to trigger
   // the default action on the selection.
   insertNewline: function(evt) {
+    ret = NO;
     if (this._listPane && this._listPane.get('isPaneAttached')) {
-      return this._listView.insertNewline(evt); // invokes default action on ListView, same as double-click
+      ret = this._listView.insertNewline(evt); // invokes default action on ListView, same as double-click
     }
-    return NO;
+    return ret;
   },
 
   insertTab: function(evt) {
@@ -748,7 +749,7 @@ SCUI.ComboBoxView = SC.View.extend( SC.Control, SC.Editable, {
       acceptsFirstResponder: NO,
 
       contentView: SC.View.extend({
-        layout: { left: 0, right: 0, top: 4, bottom: 4 },
+        layout: { left: 0, right: 0, top: 0, bottom: 4 },
         childViews: 'listView spinnerView'.w(),
         
         listView: csv.extend({
