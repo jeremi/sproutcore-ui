@@ -215,7 +215,6 @@ SCUI.UploadView = SC.View.extend(
   },
   
   didCreateLayer: function() {
-    sc_super();
     var frame = this.$('iframe');
     var input = this.$('input');
     
